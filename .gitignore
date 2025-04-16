@@ -1,0 +1,16 @@
+# Ignore virtual environment
+agribot-env/
+
+# Python cache files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Environment and config files
+.env
+GEMINI_API_KEY.env
+
+# OS and editor files
+.DS_Store
+Thumbs.db
+.vscode/

@@ -1,0 +1,532 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AgriBot Uganda</title>
+    <style>
+        :root {
+            --primary-green: #2e8b57;  /* Ugandan green */
+            --secondary-yellow: #fcd116;  /* Ugandan yellow */
+            --dark-bg: #1a1a2e;
+            --light-bg: #f5f5f5;
+            --user-bubble: #e1f5fe;
+            --bot-bubble: #ffffff;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: var(--light-bg);
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        header {
+            background-color: var(--primary-green);
+            color: white;
+            padding: 15px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        
+        .logo {
+            font-weight: bold;
+            font-size: 1.5rem;
+        }
+        
+        .logo span {
+            color: var(--secondary-yellow);
+        }
+        
+        .main-container {
+            display: flex;
+            flex: 1;
+            overflow: hidden;
+        }
+        
+        /* Left sidebar - Conversation history */
+        .sidebar {
+            width: 260px;
+            background-color: var(--dark-bg);
+            color: white;
+            padding: 15px;
+            overflow-y: auto;
+            border-right: 1px solid #ddd;
+        }
+        
+        .sidebar-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+        
+        .new-chat-sidebar {
+            background-color: var(--primary-green);
+            color: white;
+            border: none;
+            border-radius: 4px;
+            padding: 5px 10px;
+            cursor: pointer;
+            font-size: 0.8rem;
+        }
+        
+        .conversation-list {
+            list-style: none;
+        }
+        
+        .conversation-item {
+            padding: 10px;
+            margin-bottom: 5px;
+            border-radius: 5px;
+            cursor: pointer;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            position: relative;
+        }
+        
+        .conversation-item.active {
+            background-color: rgba(255,255,255,0.2);
+        }
+        
+        .conversation-item:hover {
+            background-color: rgba(255,255,255,0.1);
+        }
+        
+        /* Main chat area */
+        .chat-area {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .chat-messages {
+            flex: 1;
+            padding: 20px;
+            overflow-y: auto;
+            background-color: var(--light-bg);
+        }
+        
+        .message {
+            margin-bottom: 15px;
+            max-width: 80%;
+            display: flex;
+        }
+        
+        .user-message {
+            margin-left: auto;
+            justify-content: flex-end;
+        }
+        
+        .bot-message {
+            margin-right: auto;
+            justify-content: flex-start;
+        }
+        
+        .message-bubble {
+            padding: 12px 16px;
+            border-radius: 18px;
+            line-height: 1.4;
+            box-shadow: 0 1px 2px rgba(0,0,0,0.1);
+        }
+        
+        .user-message .message-bubble {
+            background-color: var(--primary-green);
+            color: white;
+            border-bottom-right-radius: 4px;
+        }
+        
+        .bot-message .message-bubble {
+            background-color: var(--bot-bubble);
+            border: 1px solid #ddd;
+            border-bottom-left-radius: 4px;
+        }
+        
+        .message-time {
+            font-size: 0.75rem;
+            color: #777;
+            margin-top: 4px;
+            text-align: right;
+        }
+        
+        /* Input area */
+        .input-area {
+            padding: 15px;
+            background-color: white;
+            border-top: 1px solid #ddd;
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+        
+        .input-container {
+            flex: 1;
+            display: flex;
+            gap: 10px;
+        }
+        
+        #userInput {
+            flex: 1;
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+            border-radius: 24px;
+            outline: none;
+            font-size: 1rem;
+            max-width: 500px; /* Medium width */
+        }
+        
+        #userInput:focus {
+            border-color: var(--primary-green);
+        }
+        
+        #send-btn, #new-chat-btn {
+            padding: 12px 20px;
+            background-color: var(--primary-green);
+            color: white;
+            border: none;
+            border-radius: 24px;
+            cursor: pointer;
+            font-weight: bold;
+            white-space: nowrap;
+        }
+        
+        #new-chat-btn {
+            background-color: #f0f0f0;
+            color: var(--primary-green);
+            border: 1px solid var(--primary-green);
+        }
+        
+        #send-btn:hover {
+            background-color: #267d49;
+        }
+        
+        #new-chat-btn:hover {
+            background-color: #e0e0e0;
+        }
+        
+        /* Responsive design */
+        @media (max-width: 768px) {
+            .sidebar {
+                width: 200px;
+            }
+            
+            .message {
+                max-width: 90%;
+            }
+        }
+        
+        @media (max-width: 576px) {
+            .sidebar {
+                display: none;
+            }
+            
+            .message {
+                max-width: 95%;
+            }
+            
+            .input-container {
+                flex-direction: column;
+            }
+            
+            #userInput {
+                max-width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="logo">AgriBot <span>Uganda</span></div>
+        <div>🌱</div>
+    </header>
+    
+    <div class="main-container">
+        <!-- Left sidebar - Conversation history -->
+        <div class="sidebar">
+            <div class="sidebar-header">
+                <h3>Recent Chats</h3>
+                <button class="new-chat-sidebar" onclick="createNewChat()">+ New</button>
+            </div>
+            <ul class="conversation-list" id="conversationHistory">
+                <!-- Conversation items will be added here -->
+            </ul>
+        </div>
+        
+        <!-- Main chat area -->
+        <div class="chat-area">
+            <div class="chat-messages" id="chatMessages">
+                <!-- Messages will appear here -->
+            </div>
+            
+            <div class="input-area">
+                <div class="input-container">
+                    <input type="text" id="userInput" placeholder="Ask about crops, pests, or farming techniques..." />
+                    <button id="new-chat-btn" onclick="createNewChat()">New Chat</button>
+                    <button id="send-btn" onclick="sendMessage()">Send</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let currentChatId = Date.now().toString();
+        let chats = {};
+        
+        document.addEventListener('DOMContentLoaded', function() {
+            // Load saved chats from localStorage
+            loadConversationHistory();
+            
+            // Initialize a new chat if none exists
+            if (!chats[currentChatId]) {
+                createNewChat(false);
+            }
+        });
+        
+        function createNewChat(showWelcome = true) {
+            // Save current chat before creating new one
+            saveCurrentChat();
+            
+            // Create new chat ID
+            currentChatId = Date.now().toString();
+            chats[currentChatId] = {
+                messages: [],
+                title: "New Chat " + Object.keys(chats).length + 1
+            };
+            
+            // Clear chat messages
+            document.getElementById('chatMessages').innerHTML = '';
+            
+            // Add to conversation history
+            addToConversationHistory(chats[currentChatId].title);
+            
+            // Set this as active chat
+            setActiveChat(currentChatId);
+            
+            // Show welcome message
+            if (showWelcome) {
+                addBotMessage("Hello! I'm AgriBot Uganda. 🌱 Ask me about crops, pests, or farming techniques in Uganda.");
+                chats[currentChatId].messages.push({
+                    sender: "bot",
+                    text: "Hello! I'm AgriBot Uganda. 🌱 Ask me about crops, pests, or farming techniques in Uganda.",
+                    time: new Date().toISOString()
+                });
+            }
+            
+            // Save to localStorage
+            saveConversationHistory();
+        }
+        
+        function setActiveChat(chatId) {
+            // Update all conversation items
+            document.querySelectorAll('.conversation-item').forEach(item => {
+                item.classList.remove('active');
+                if (item.dataset.chatId === chatId) {
+                    item.classList.add('active');
+                }
+            });
+        }
+        
+        function saveCurrentChat() {
+            if (currentChatId && chats[currentChatId]) {
+                // Save messages from DOM to our chat object
+                const messageElements = document.getElementById('chatMessages').children;
+                chats[currentChatId].messages = [];
+                
+                for (let element of messageElements) {
+                    const isUser = element.classList.contains('user-message');
+                    const text = element.querySelector('.message-bubble').textContent;
+                    const time = element.querySelector('.message-time').textContent;
+                    
+                    chats[currentChatId].messages.push({
+                        sender: isUser ? "user" : "bot",
+                        text: text,
+                        time: time
+                    });
+                }
+            }
+        }
+        
+        function sendMessage() {
+            const input = document.getElementById('userInput');
+            const message = input.value.trim();
+            
+            if (message) {
+                // Add user message to chat
+                addUserMessage(message);
+                input.value = '';
+                
+                // Update chat title if this is the first message
+                if (chats[currentChatId].messages.length === 0) {
+                    const shortMessage = message.length > 20 ? message.substring(0, 20) + '...' : message;
+                    chats[currentChatId].title = shortMessage;
+                    updateConversationTitle(currentChatId, shortMessage);
+                }
+                
+                // Add to chat object
+                chats[currentChatId].messages.push({
+                    sender: "user",
+                    text: message,
+                    time: new Date().toISOString()
+                });
+                
+                // Send to backend (replace with your actual API call)
+                fetch('/chat', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ query: message })
+                })
+                .then(response => response.json())
+                .then(data => {
+                    // Display bot response
+                    addBotMessage(data.response);
+                    chats[currentChatId].messages.push({
+                        sender: "bot",
+                        text: data.response,
+                        time: new Date().toISOString()
+                    });
+                })
+                .catch(error => {
+                    console.error("Error:", error);
+                    addBotMessage("Sorry, I'm having trouble connecting. Please try again later.");
+                });
+                
+                // Save to localStorage
+                saveConversationHistory();
+            }
+        }
+        
+        function addUserMessage(text) {
+            addMessage("user", text);
+        }
+        
+        function addBotMessage(text) {
+            addMessage("bot", text);
+        }
+        
+        function addMessage(sender, text) {
+            const chat = document.getElementById('chatMessages');
+            const messageDiv = document.createElement('div');
+            messageDiv.className = `message ${sender}-message`;
+            
+            const now = new Date();
+            const timeString = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+            
+            messageDiv.innerHTML = `
+                <div class="message-bubble">${text}</div>
+                <div class="message-time">${timeString}</div>
+            `;
+            
+            chat.appendChild(messageDiv);
+            chat.scrollTop = chat.scrollHeight;
+        }
+        
+        function addToConversationHistory(title) {
+            const historyList = document.getElementById('conversationHistory');
+            const listItem = document.createElement('li');
+            listItem.className = 'conversation-item active';
+            listItem.textContent = title;
+            listItem.dataset.chatId = currentChatId;
+            
+            // Add click handler to load chat
+            listItem.addEventListener('click', function() {
+                loadChat(this.dataset.chatId);
+            });
+            
+            // Add to top of list
+            historyList.insertBefore(listItem, historyList.firstChild);
+            
+            // Limit history items
+            if (historyList.children.length > 10) {
+                historyList.removeChild(historyList.lastChild);
+            }
+        }
+        
+        function updateConversationTitle(chatId, newTitle) {
+            const item = document.querySelector(`.conversation-item[data-chat-id="${chatId}"]`);
+            if (item) {
+                item.textContent = newTitle;
+                chats[chatId].title = newTitle;
+            }
+        }
+        
+        function loadChat(chatId) {
+            // Save current chat first
+            saveCurrentChat();
+            
+            // Set new chat as active
+            currentChatId = chatId;
+            setActiveChat(chatId);
+            
+            // Clear and reload messages
+            const chatMessages = document.getElementById('chatMessages');
+            chatMessages.innerHTML = '';
+            
+            if (chats[chatId]) {
+                // Display all messages for this chat
+                chats[chatId].messages.forEach(msg => {
+                    if (msg.sender === "user") {
+                        addUserMessage(msg.text);
+                    } else {
+                        addBotMessage(msg.text);
+                    }
+                });
+            }
+        }
+        
+        function saveConversationHistory() {
+            // Save all chats to localStorage
+            localStorage.setItem('agribotChats', JSON.stringify(chats));
+            localStorage.setItem('agribotCurrentChat', currentChatId);
+        }
+        
+        function loadConversationHistory() {
+            const savedChats = localStorage.getItem('agribotChats');
+            const savedCurrent = localStorage.getItem('agribotCurrentChat');
+            
+            if (savedChats) {
+                chats = JSON.parse(savedChats);
+                
+                // Load conversation history list
+                const historyList = document.getElementById('conversationHistory');
+                historyList.innerHTML = '';
+                
+                // Add all chats to sidebar (newest first)
+                Object.entries(chats).sort((a, b) => b[0] - a[0]).forEach(([id, chat]) => {
+                    const listItem = document.createElement('li');
+                    listItem.className = 'conversation-item';
+                    listItem.textContent = chat.title;
+                    listItem.dataset.chatId = id;
+                    
+                    listItem.addEventListener('click', function() {
+                        loadChat(this.dataset.chatId);
+                    });
+                    
+                    historyList.appendChild(listItem);
+                });
+                
+                // Load current chat if specified
+                if (savedCurrent && chats[savedCurrent]) {
+                    currentChatId = savedCurrent;
+                    loadChat(currentChatId);
+                } else if (Object.keys(chats).length > 0) {
+                    // Load the most recent chat
+                    const mostRecentId = Object.keys(chats).sort().reverse()[0];
+                    loadChat(mostRecentId);
+                }
+            }
+        }
+    </script>
+</body>
+</html>
