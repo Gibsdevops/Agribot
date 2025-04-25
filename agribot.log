@@ -1,0 +1,106 @@
+2025-04-17 14:37:19 - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2025-04-17 14:37:19 - [33mPress CTRL+C to quit[0m
+2025-04-17 14:37:19 -  * Restarting with stat
+2025-04-17 14:37:34 -  * Debugger is active!
+2025-04-17 14:37:34 -  * Debugger PIN: 646-163-950
+2025-04-17 14:37:44 - 127.0.0.1 - - [17/Apr/2025 14:37:44] "GET / HTTP/1.1" 200 -
+2025-04-17 14:37:45 - 127.0.0.1 - - [17/Apr/2025 14:37:45] "[33mGET /favicon.ico HTTP/1.1[0m" 404 -
+2025-04-17 14:38:07 - 127.0.0.1 - - [17/Apr/2025 14:38:07] "[35m[1mPOST /chat HTTP/1.1[0m" 500 -
+2025-04-17 15:17:27 -  * Detected change in 'C:\\Users\\KAB_ADMIN\\agribot\\chatbot\\chatbot.py', reloading
+2025-04-17 15:17:32 -  * Restarting with stat
+2025-04-17 15:17:50 -  * Debugger is active!
+2025-04-17 15:17:50 -  * Debugger PIN: 646-163-950
+2025-04-17 15:20:27 - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2025-04-17 15:20:27 - [33mPress CTRL+C to quit[0m
+2025-04-17 15:34:03 - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2025-04-17 15:34:03 - [33mPress CTRL+C to quit[0m
+2025-04-17 15:37:03 - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2025-04-17 15:37:03 - [33mPress CTRL+C to quit[0m
+2025-04-17 15:37:03 -  * Restarting with stat
+2025-04-17 15:37:16 -  * Debugger is active!
+2025-04-17 15:37:16 -  * Debugger PIN: 646-163-950
+2025-04-17 15:37:33 - Backing off send_request(...) for 0.3s (requests.exceptions.ReadTimeout: HTTPSConnectionPool(host='us.i.posthog.com', port=443): Read timed out. (read timeout=15))
+2025-04-17 15:37:49 - Backing off send_request(...) for 0.7s (requests.exceptions.ReadTimeout: HTTPSConnectionPool(host='us.i.posthog.com', port=443): Read timed out. (read timeout=15))
+2025-04-17 15:39:03 - 127.0.0.1 - - [17/Apr/2025 15:39:03] "GET / HTTP/1.1" 200 -
+2025-04-17 15:39:03 - 127.0.0.1 - - [17/Apr/2025 15:39:03] "[33mGET /favicon.ico HTTP/1.1[0m" 404 -
+2025-04-17 15:39:19 - 127.0.0.1 - - [17/Apr/2025 15:39:19] "[35m[1mPOST /chat HTTP/1.1[0m" 500 -
+2025-04-17 15:43:38 -  * Detected change in 'C:\\Users\\KAB_ADMIN\\agribot\\chatbot\\chatbot.py', reloading
+2025-04-17 15:43:41 -  * Restarting with stat
+2025-04-17 15:47:14 - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2025-04-17 15:47:14 - [33mPress CTRL+C to quit[0m
+2025-04-17 15:47:30 - Backing off send_request(...) for 0.1s (requests.exceptions.ReadTimeout: HTTPSConnectionPool(host='us.i.posthog.com', port=443): Read timed out. (read timeout=15))
+2025-04-17 15:47:37 - 127.0.0.1 - - [17/Apr/2025 15:47:37] "GET / HTTP/1.1" 200 -
+2025-04-17 15:47:56 - Query: 'how to plant beans' | Response source: gemini_fallback
+2025-04-17 15:47:56 - 127.0.0.1 - - [17/Apr/2025 15:47:56] "POST /chat HTTP/1.1" 200 -
+2025-04-17 15:48:40 - Query: 'how do i start planting beans' | Response source: gemini_fallback
+2025-04-17 15:48:40 - 127.0.0.1 - - [17/Apr/2025 15:48:40] "POST /chat HTTP/1.1" 200 -
+2025-04-17 15:48:49 - Query: 'okay' | Response source: intent_handler
+2025-04-17 15:48:49 - 127.0.0.1 - - [17/Apr/2025 15:48:49] "POST /chat HTTP/1.1" 200 -
+2025-04-17 16:08:22 - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2025-04-17 16:08:22 - [33mPress CTRL+C to quit[0m
+2025-04-17 16:09:00 - 127.0.0.1 - - [17/Apr/2025 16:09:00] "GET / HTTP/1.1" 200 -
+2025-04-17 16:09:19 - Query: 'how to plant maize' | Response source: gemini_fallback
+2025-04-17 16:09:19 - 127.0.0.1 - - [17/Apr/2025 16:09:19] "POST /chat HTTP/1.1" 200 -
+2025-04-17 16:13:31 - Query: 'how to plant matooke' | Response source: gemini_fallback
+2025-04-17 16:13:31 - 127.0.0.1 - - [17/Apr/2025 16:13:31] "POST /chat HTTP/1.1" 200 -
+2025-04-17 16:37:44 - Query: 'hey' | Response source: intent_handler
+2025-04-17 16:37:44 - 127.0.0.1 - - [17/Apr/2025 16:37:44] "POST /chat HTTP/1.1" 200 -
+2025-04-17 16:45:22 - 127.0.0.1 - - [17/Apr/2025 16:45:22] "GET / HTTP/1.1" 200 -
+2025-04-17 16:45:32 - 127.0.0.1 - - [17/Apr/2025 16:45:32] "GET / HTTP/1.1" 200 -
+2025-04-17 16:45:55 - Query: 'how to plant matooke' | Response source: gemini_fallback
+2025-04-17 16:45:55 - 127.0.0.1 - - [17/Apr/2025 16:45:55] "POST /chat HTTP/1.1" 200 -
+2025-04-25 14:25:59 - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2025-04-25 14:25:59 - [33mPress CTRL+C to quit[0m
+2025-04-25 14:25:59 -  * Restarting with stat
+2025-04-25 14:26:30 -  * Debugger is active!
+2025-04-25 14:26:30 -  * Debugger PIN: 646-163-950
+2025-04-25 14:26:47 - Backing off send_request(...) for 0.8s (requests.exceptions.ReadTimeout: HTTPSConnectionPool(host='us.i.posthog.com', port=443): Read timed out. (read timeout=15))
+2025-04-25 14:29:05 - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2025-04-25 14:29:05 - [33mPress CTRL+C to quit[0m
+2025-04-25 14:29:14 - 127.0.0.1 - - [25/Apr/2025 14:29:14] "GET / HTTP/1.1" 200 -
+2025-04-25 14:29:15 - 127.0.0.1 - - [25/Apr/2025 14:29:15] "[33mGET /favicon.ico HTTP/1.1[0m" 404 -
+2025-04-25 14:31:14 - Query: 'how can i plant beans' | Response source: gemini_fallback
+2025-04-25 14:31:14 - 127.0.0.1 - - [25/Apr/2025 14:31:14] "POST /chat HTTP/1.1" 200 -
+2025-04-25 14:31:37 - Query: 'how do i plant matoke' | Response source: gemini_fallback
+2025-04-25 14:31:37 - 127.0.0.1 - - [25/Apr/2025 14:31:37] "POST /chat HTTP/1.1" 200 -
+2025-04-25 14:49:38 - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2025-04-25 14:49:38 - [33mPress CTRL+C to quit[0m
+2025-04-25 14:50:00 - 127.0.0.1 - - [25/Apr/2025 14:50:00] "GET / HTTP/1.1" 200 -
+2025-04-25 14:50:29 - Query: 'how do i grow beans' | Response source: gemini_fallback
+2025-04-25 14:50:29 - 127.0.0.1 - - [25/Apr/2025 14:50:29] "POST /chat HTTP/1.1" 200 -
+2025-04-25 15:05:47 - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2025-04-25 15:05:47 - [33mPress CTRL+C to quit[0m
+2025-04-25 15:06:06 - 127.0.0.1 - - [25/Apr/2025 15:06:06] "GET / HTTP/1.1" 200 -
+2025-04-25 15:11:29 - 127.0.0.1 - - [25/Apr/2025 15:11:29] "GET / HTTP/1.1" 200 -
+2025-04-25 15:12:32 - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2025-04-25 15:12:32 - [33mPress CTRL+C to quit[0m
+2025-04-25 15:12:32 - 127.0.0.1 - - [25/Apr/2025 15:12:32] "GET / HTTP/1.1" 200 -
+2025-04-25 15:12:48 - Query: 'how to plant matooke' | Response source: gemini_fallback
+2025-04-25 15:12:48 - 127.0.0.1 - - [25/Apr/2025 15:12:48] "POST /chat HTTP/1.1" 200 -
+2025-04-25 15:33:55 - Query: 'how to plant crops' | Response source: gemini_fallback
+2025-04-25 15:33:55 - 127.0.0.1 - - [25/Apr/2025 15:33:55] "POST /chat HTTP/1.1" 200 -
+2025-04-25 15:34:13 - Query: 'how to plant matooke' | Response source: gemini_fallback
+2025-04-25 15:34:13 - 127.0.0.1 - - [25/Apr/2025 15:34:13] "POST /chat HTTP/1.1" 200 -
+2025-04-25 15:35:26 - Query: 'hey' | Response source: intent_handler
+2025-04-25 15:35:26 - 127.0.0.1 - - [25/Apr/2025 15:35:26] "POST /chat HTTP/1.1" 200 -
+2025-04-25 15:36:08 - Query: 'how to plant beans' | Response source: gemini_fallback
+2025-04-25 15:36:08 - 127.0.0.1 - - [25/Apr/2025 15:36:08] "POST /chat HTTP/1.1" 200 -
+2025-04-25 16:27:40 - Query: 'hey' | Response source: intent_handler
+2025-04-25 16:27:40 - 127.0.0.1 - - [25/Apr/2025 16:27:40] "POST /chat HTTP/1.1" 200 -
+2025-04-25 16:27:53 - Query: 'this is alouzious' | Response source: gemini_fallback
+2025-04-25 16:27:53 - 127.0.0.1 - - [25/Apr/2025 16:27:53] "POST /chat HTTP/1.1" 200 -
+2025-04-25 16:28:01 - Query: 'l want to eat' | Response source: gemini_fallback
+2025-04-25 16:28:01 - 127.0.0.1 - - [25/Apr/2025 16:28:01] "POST /chat HTTP/1.1" 200 -
+2025-04-25 16:28:14 - Query: 'fuck ypu' | Response source: gemini_fallback
+2025-04-25 16:28:14 - 127.0.0.1 - - [25/Apr/2025 16:28:14] "POST /chat HTTP/1.1" 200 -

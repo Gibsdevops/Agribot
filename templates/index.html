@@ -216,6 +216,38 @@
             background-color: #e0e0e0;
         }
         
+        /* Source indicator styles */
+        .message-content {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .source-indicator {
+            font-size: 0.7rem;
+            padding: 2px 6px;
+            border-radius: 10px;
+            margin-top: 4px;
+            align-self: flex-start;
+            font-weight: normal;
+            color: white;
+        }
+
+        .source-db {
+            background-color: #4caf50; /* Green for database */
+        }
+
+        .source-ai {
+            background-color: #2196f3; /* Blue for AI generated */
+        }
+
+        .source-intent {
+            background-color: #9e9e9e; /* Gray for standard responses */
+        }
+
+        .source-other {
+            background-color: #ff9800; /* Orange for other */
+        }
+        
         /* Responsive design */
         @media (max-width: 768px) {
             .sidebar {
@@ -302,7 +334,7 @@
             currentChatId = Date.now().toString();
             chats[currentChatId] = {
                 messages: [],
-                title: "New Chat " + Object.keys(chats).length + 1
+                title: "New Chat " + (Object.keys(chats).length + 1)
             };
             
             // Clear chat messages
@@ -316,11 +348,12 @@
             
             // Show welcome message
             if (showWelcome) {
-                addBotMessage("Hello! I'm AgriBot Uganda. 🌱 Ask me about crops, pests, or farming techniques in Uganda.");
+                addBotMessage("Hello! I'm AgriBot Uganda. 🌱 Ask me about crops, pests, or farming techniques in Uganda.", "intent_handler");
                 chats[currentChatId].messages.push({
                     sender: "bot",
                     text: "Hello! I'm AgriBot Uganda. 🌱 Ask me about crops, pests, or farming techniques in Uganda.",
-                    time: new Date().toISOString()
+                    time: new Date().toISOString(),
+                    source: "intent_handler"
                 });
             }
             
@@ -348,11 +381,14 @@
                     const isUser = element.classList.contains('user-message');
                     const text = element.querySelector('.message-bubble').textContent;
                     const time = element.querySelector('.message-time').textContent;
+                    const source = !isUser && element.querySelector('.source-indicator') ? 
+                                 element.querySelector('.source-indicator').textContent : "";
                     
                     chats[currentChatId].messages.push({
                         sender: isUser ? "user" : "bot",
                         text: text,
-                        time: time
+                        time: time,
+                        source: isUser ? "" : source
                     });
                 }
             }
@@ -389,12 +425,13 @@
                 })
                 .then(response => response.json())
                 .then(data => {
-                    // Display bot response
-                    addBotMessage(data.response);
+                    // Display bot response with source
+                    addBotMessage(data.response, data.source);
                     chats[currentChatId].messages.push({
                         sender: "bot",
                         text: data.response,
-                        time: new Date().toISOString()
+                        time: new Date().toISOString(),
+                        source: data.source
                     });
                 })
                 .catch(error => {
@@ -408,23 +445,62 @@
         }
         
         function addUserMessage(text) {
-            addMessage("user", text);
-        }
-        
-        function addBotMessage(text) {
-            addMessage("bot", text);
-        }
-        
-        function addMessage(sender, text) {
             const chat = document.getElementById('chatMessages');
             const messageDiv = document.createElement('div');
-            messageDiv.className = `message ${sender}-message`;
+            messageDiv.className = `message user-message`;
             
             const now = new Date();
             const timeString = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
             
             messageDiv.innerHTML = `
                 <div class="message-bubble">${text}</div>
+                <div class="message-time">${timeString}</div>
+            `;
+            
+            chat.appendChild(messageDiv);
+            chat.scrollTop = chat.scrollHeight;
+        }
+        
+        function addBotMessage(text, source) {
+            const chat = document.getElementById('chatMessages');
+            const messageDiv = document.createElement('div');
+            messageDiv.className = `message bot-message`;
+            
+            const now = new Date();
+            const timeString = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+            
+            // Add a small indicator for the response source
+            let sourceIndicator = '';
+            if (source) {
+                let sourceClass = '';
+                let sourceText = '';
+                
+                switch(source) {
+                    case 'vector_store':
+                        sourceClass = 'source-db';
+                        sourceText = 'From Database';
+                        break;
+                    case 'gemini_fallback':
+                        sourceClass = 'source-ai';
+                        sourceText = 'AI Generated';
+                        break;
+                    case 'intent_handler':
+                        sourceClass = 'source-intent';
+                        sourceText = 'Standard Response';
+                        break;
+                    default:
+                        sourceClass = 'source-other';
+                        sourceText = 'System Response';
+                }
+                
+                sourceIndicator = `<div class="source-indicator ${sourceClass}">${sourceText}</div>`;
+            }
+            
+            messageDiv.innerHTML = `
+                <div class="message-content">
+                    <div class="message-bubble">${text}</div>
+                    ${sourceIndicator}
+                </div>
                 <div class="message-time">${timeString}</div>
             `;
             
@@ -479,7 +555,7 @@
                     if (msg.sender === "user") {
                         addUserMessage(msg.text);
                     } else {
-                        addBotMessage(msg.text);
+                        addBotMessage(msg.text, msg.source);
                     }
                 });
             }
@@ -527,6 +603,13 @@
                 }
             }
         }
+        
+        // Add Enter key press event to input field
+        document.getElementById('userInput').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                sendMessage();
+            }
+        });
     </script>
 </body>
 </html>
